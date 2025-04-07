@@ -1,0 +1,16 @@
+
+
+.longtextinput--textarea {
+  width: 90%;
+  border: 1px solid black;
+  border-radius: 4px;
+  padding: 4px;
+  background-color: var(--input-background-color);
+  height: 2rem;
+  overflow: auto;
+  text-wrap: wrap;
+}
+
+.longtextinput--label {
+  margin-top: .5rem;
+}

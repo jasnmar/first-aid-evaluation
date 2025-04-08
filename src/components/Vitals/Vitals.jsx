@@ -6,7 +6,7 @@ function Vitals() {
     <>
     <section>
       <h2>Vitals</h2>
-        <Vital id='original' />
+        <Vital id='0' />
 
 
     </section>

@@ -9,7 +9,7 @@ function App() {
 
   return (
     <>
-      <h2>First Aid Information</h2>
+      <h1>Situation Documentation</h1>
       <BasicInfo />
       <Primary />
       <Secondary />

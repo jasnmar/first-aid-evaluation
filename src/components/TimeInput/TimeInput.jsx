@@ -3,9 +3,10 @@
 function TimeInput(props) {
   return (
     <>
-      <label className="label-horizontal">{props.title}: 
-          <input id={props.id} className="text-input" name={props.name} type="time"></input>
-        </label>
+      <div className="input-container">
+        <label htmlFor={props.id}>{props.title}:</label>
+        <input className="text-input" onChange={props.updater} id={props.id} name={props.name} type={props.type}></input>
+      </div>
     </>
   )
 }

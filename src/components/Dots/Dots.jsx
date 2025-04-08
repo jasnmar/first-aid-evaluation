@@ -1,25 +1,27 @@
 import "./Dots.css"
 
-function Dots() {
+function Dots(props) {
 
   return (
   <>
+  <div>
     <label className="label-check">
-      <input type="checkbox" name="deformity"></input>
+      <input data-group={props.id} onClick={props.updater} type="checkbox" name="deformity"></input>
       Deformity
     </label>
     <label className="label-check">
-      <input type="checkbox" name="openinjury"></input>
+      <input data-group={props.id} onClick={props.updater} type="checkbox" name="openinjury"></input>
       Open Injury
     </label>
     <label className="label-check">
-      <input type="checkbox" name="tenderness"></input>
+      <input data-group={props.id} onClick={props.updater} type="checkbox" name="tenderness"></input>
       Tenderness
     </label>
     <label className="label-check">
-      <input type="checkbox" name="swelling"></input>
+      <input data-group={props.id} onClick={props.updater} type="checkbox" name="swelling"></input>
       Swelling
     </label>
+  </div>
   </>
   )
 }

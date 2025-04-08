@@ -1,52 +1,74 @@
+import RadioChoice from "../RadioChoice/RadioChoice"
 
 
 function LevelOfResponsiveness(props) {
 
   const id = props.id
+  const updater = props.updater
+  
+  
+  const responsivenessChoices = 
+    {choice:"Responsivness", 
+      options:[
+        {id: "alert", value: "Alert", checked: false}, 
+        {id: "verbal", value: "Verbal", checked: false}, 
+        {id: "pain", value: "Pain Only", checked: false}, 
+        {id: "none", value: "Unresponsive", checked: false}
+      ]
+    }
+
   return (
     <>
-      <fieldset>
-        <legend>Responsiveness</legend>
-        <div>
-          <input type="radio" id={id+"-none"} name="responsiveness" value="none"></input>
-          <label className="radio-label" for={id+"-none"}>Unresponsive</label>
-        </div>
-        <div>
-          <input type="radio" id={id+"-pain"} name="responsiveness" value="pain"></input>
-          <label className="radio-label" for={id+"-pain"}>Pain Only</label>
-        </div>
-        <div>
-          <input type="radio" id={id+"-verbal"} name="responsiveness" value="verbal"></input>
-          <label className="radio-label" for={id+"-verbal"}>Verbal</label>
-        </div>
-        <div>
-          <input type="radio" id={id+"-alert"} name="responsiveness" value="alert"></input>
-          <label className="radio-label" for={id+"-alert"}>Alert</label>
-        </div>
-      </fieldset>
-      <div className="section-container justify-left">
+      <RadioChoice 
+        legend="Responsiveness" 
+        name={"responsiveness"} 
+        item={id}
+        options={responsivenessChoices}
+        updater={updater} 
+      />
+      <div id={id+'-check'} className="check-container hidden">
+        <p className="check-label" >Do they know</p>
         <label className="label-check">
-          <input type="checkbox" name="name">
+          <input 
+            data-item="name" 
+            data-group={id} 
+            onClick={updater} 
+            type="checkbox" 
+            name="name">
           </input>
           Name
         </label>
         <label className="label-check">
-          <input type="checkbox" name="location">
+          <input 
+            data-item="location" 
+            data-group={id} 
+            onClick={updater} 
+            type="checkbox" 
+            name="location">
           </input>
           Location
         </label>
         <label className="label-check">
-          <input type="checkbox" name="date">
+          <input 
+            data-item="date" 
+            data-group={id} 
+            onClick={updater} 
+            type="checkbox" 
+            name="date">
           </input>
           Date
         </label>
         <label className="label-check">
-          <input type="checkbox" name="happening">
+          <input 
+            data-item="happening" 
+            data-group={id} 
+            onClick={updater} 
+            type="checkbox" 
+            name="happening">
           </input>
           What Happened
         </label>
       </div>
-    
     </>
   )
 }

@@ -1,8 +1,10 @@
 :root {
   --input-background-color: azure;
+  --input-width: 80%;
 }
 body {
-  margin-bottom: 2rem;
+  margin-bottom: 4rem;
+  width: 100%;
 }
 h1, h2 {
   margin-left: 1rem;
@@ -15,7 +17,20 @@ section {
 .section-container {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
+}
+
+.input-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  margin-bottom: 1rem;
+  margin-left: 1rem;
+}
+
+.check-container {
+  margin-left: 1rem;
 }
 
 .label-horizontal {
@@ -27,19 +42,29 @@ section {
 }
 
 .text-input {
-  width: 70%;
+  width: var(--input-width);
   background-color: var(--input-background-color);
   border: 1px solid black;
   border-radius: 4px;
-  padding: 4px;
+  padding: 8px;
+}
+
+.longtextinput-container {
+  width: 100%;
+  margin-left: 1rem;
+}
+
+.physicalexamination-container{
+  margin-left: 1rem;
 }
 
 fieldset {
   display: flex;
+  flex-wrap: wrap;
   flex-direction: row;
   justify-content: space-between;
-  border: 0px solid black;
-  border-radius: 4px;
+  border: none;
+  width: 80%;
 }
 
 .label-check{
@@ -52,6 +77,10 @@ fieldset {
 .justify-left {
   align-items: flex-start;
   margin-left: 1rem;
+}
+
+.radio-container {
+  width: 100%;
 }
 
 .radio-label {
@@ -69,3 +98,11 @@ fieldset {
   width: 100%;
 }
 
+@media (max-width: 481px) {
+  /* CSS rules to apply when the screen width is 401 pixels or wider */
+  /* Example: */
+  fieldset {
+    flex-direction: column;
+  }
+
+}

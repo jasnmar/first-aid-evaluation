@@ -39,7 +39,7 @@ function Dots(props) {
 
   return (
     <>
-      <div>{allElements}</div>
+      <div className="dots-container">{allElements}</div>
     </>
   )
 }

@@ -11,10 +11,10 @@ function Secondary() {
   const responsiveDataFromStorage = localStorage.getItem('responsiveData')
   const dotsDataFromStorage = localStorage.getItem('dotsData')
   
-
+  console.log('responsiveDataTemplate: ', responsiveDataTemplate)
   const defaultData = {
     responsivness: {
-      responsiveDataTemplate
+      ...responsiveDataTemplate
     }, textInputs: [
     {complaint: ""},
     {signs: ""},

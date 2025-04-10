@@ -1,14 +1,15 @@
 import "./Primary.css"
-//import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import RadioChoice from "../RadioChoice/RadioChoice"
 
 function Primary() {
+
   const primaryOptions = [
     {choice: "airway", 
       options: [
         {id:"clear", value: "Clear", checked:false}, 
         {id:"obstructed", value: "Obstructed", checked:false}]}, 
-    {choice: "Breathing", 
+    {choice: "breathing", 
       options: [
         {id:"normal", value: "Normal", checked:false}, 
         {id:"shallow", value: "Shallow", checked:false}, 
@@ -18,12 +19,12 @@ function Primary() {
         {id:"none", value: "None", checked:false}, 
         {id:"minor", value: "Minor", checked:false}, 
         {id:"severe", value: "Severe", checked:false}]},
-    {choice: "Disability", 
+    {choice: "disability", 
       options:[
         {id:"none", value: "None", checked:false}, 
         {id:"yes", value: "Yes", checked:false}, 
         {id:"unsure", value: "Unsure", checked:false}]},
-    {choice: "Environmental", 
+    {choice: "environmental", 
       options:[
         {id:"none", value:"None", checked:false}, 
         {id:"yes", value: "Yes", checked:false}, 
@@ -31,15 +32,54 @@ function Primary() {
       ]
     }
   ]
+ 
+  const primaryDataFromStorage = localStorage.getItem('primaryData')
+  let dataFromStorage
+  if(primaryDataFromStorage?.length > 0) {
+    dataFromStorage = JSON.parse(primaryDataFromStorage)
+  }
+  else {
+    dataFromStorage = primaryOptions
+  }
 
-  let primaryData = {}
+  const [primaryData, setPrimaryData] = useState(dataFromStorage)
+
+  function updateRadioData(choice, checkedItem){
+    const foundIndex = primaryOptions.findIndex((item) => {
+      return item.choice === choice 
+    })
+    const optionsArray = primaryOptions[foundIndex].options
+    const newOptions = optionsArray.map((option) => {
+      if(option.id === checkedItem) {
+        option.checked = true
+      }
+      else {
+        option.checked = false
+      }
+      return option
+    })
+    let newArray = []
+    setPrimaryData((privData) => {
+      newArray = privData.map(item => {
+        if(item.choice === choice) {
+          item.options = newOptions
+        }
+        return item
+      })
+      return newArray
+    })
+    return newArray
+  }
+
   function updateItem(e){
     const updateElem = e.target.name
-    const updatVal = e.target.dataset.item
-    primaryData={...primaryData, [updateElem]: updatVal}
-    console.log(primaryData)
-    localStorage.setItem('primaryData', JSON.stringify(primaryData));
+    const updateVal = e.target.dataset.item
+    updateRadioData(updateElem, updateVal)
   }
+
+  useEffect(() => {
+    localStorage.setItem('primaryData', JSON.stringify(primaryData))
+  },[primaryData])
 
   return (
     <>
@@ -48,28 +88,34 @@ function Primary() {
         <RadioChoice 
           legend="Airway" 
           name="airway" 
-          options={primaryOptions[0]}
-          updater={updateItem} />
+          options={primaryData[0]}
+          updater={updateItem} 
+          // selected={airway} 
+        />
         <RadioChoice 
           legend="Breathing" 
           name="breathing" 
-          options={primaryOptions[1]}
-          updater={updateItem} />
+          options={primaryData[1]}
+          updater={updateItem} 
+        />
         <RadioChoice 
           legend="Circulation (Bleeding)" 
           name="circulation" 
-          options={primaryOptions[2]}
-          updater={updateItem} />
+          options={primaryData[2]}
+          updater={updateItem} 
+        />
         <RadioChoice 
           legend="Disability (Spine)" 
-          name="spinal" 
-          options={primaryOptions[3]}
-          updater={updateItem} />
+          name="disability" 
+          options={primaryData[3]}
+          updater={updateItem} 
+        />
         <RadioChoice 
           legend="Environmental" 
           name="environmental" 
-          options={primaryOptions[4]}
-          updater={updateItem} />
+          options={primaryData[4]}
+          updater={updateItem} 
+        />
       </section>
     </>
   )

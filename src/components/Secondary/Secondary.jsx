@@ -1,32 +1,170 @@
 import "./Secondary.css"
+import { useState, useEffect } from "react"
 import Dots from "../Dots/Dots"
 import LongTextInput from "../LongTextInput/LongTextInput"
 import LevelOfResponsiveness from "../LevelOfResponsiveness/LevelOfResponsiveness"
-import { lorUpdater } from "../componentUtils/updater"
+import { lorObjectUpdater } from "../componentUtils/updater"
+import { responsiveData as responsiveDataTemplate } from "../componentUtils/responsiveness"
 
 function Secondary() {
-  let secondData = {}
+  const secondaryDataFromStorage = localStorage.getItem('secondaryData')
+  const responsiveDataFromStorage = localStorage.getItem('responsiveData')
+  const dotsDataFromStorage = localStorage.getItem('dotsData')
+  
+
+  const defaultData = {
+    responsivness: {
+      responsiveDataTemplate
+    }, textInputs: [
+    {complaint: ""},
+    {signs: ""},
+    {allergies: ""},
+    {medications: ""},
+    {history: ""},
+    {intake: ""},
+    {output: ""},
+    {events: ""}
+    ],
+    dots: [
+    {bodypart: "head", data:"Head",
+      checks: [
+      {id: "deformity", value: "Deformity", checked: false},
+      {id: "open", value: "Open Injury", checked: false},
+      {id: "tenerness", value: "Tenderness", checked: false},
+      {id: "swelling", value: "Swelling", checked: false}  
+      ]
+    },
+    {bodypart: "chest", data:"Chest",
+      checks: [
+      {id: "deformity", value: "Deformity", checked: false},
+      {id: "open", value: "Open Injury", checked: false},
+      {id: "tenerness", value: "Tenderness", checked: false},
+      {id: "swelling", value: "Swelling", checked: false}  
+    ]},
+    {bodypart: "abdomen", data:"Abdomen",
+      checks: [
+      {id: "deformity", value: "Deformity", checked: false},
+      {id: "open", value: "Open Injury", checked: false},
+      {id: "tenderness", value: "Tenderness", checked: false},
+      {id: "swelling", value: "Swelling", checked: false}  
+    ], value:"Abdomen"},
+    {bodypart: "pelvis", data:"Pelvis",
+      checks: [
+      {id: "deformity", value: "Deformity", checked: false},
+      {id: "open", value: "Open Injury", checked: false},
+      {id: "tenderness", value: "Tenderness", checked: false},
+      {id: "swelling", value: "Swelling", checked: false}  
+    ]},
+    {bodypart: "legs", data:"Legs / Arms",
+      checks: [
+      {id: "deformity", value: "Deformity", checked: false},
+      {id: "open", value: "Open Injury", checked: false},
+      {id: "tenderness", value: "Tenderness", checked: false},
+      {id: "swelling", value: "Swelling", checked: false}  
+    ]},
+    {bodypart: "back", data:"Back",
+      checks:  [
+      {id: "deformity", value: "Deformity", checked: false},
+      {id: "open", value: "Open Injury", checked: false},
+      {id: "tenderness", value: "Tenderness", checked: false},
+      {id: "swelling", value: "Swelling", checked: false}  
+    ]}
+  ]}
+
+  let responsiveDataCheck = {}
+  if(responsiveDataFromStorage?.length > 0) {
+    responsiveDataCheck = JSON.parse(responsiveDataFromStorage)
+    } else {
+    responsiveDataCheck = defaultData.responsivness
+  }
+
+  let dotsDataCheck = {}
+  if(dotsDataFromStorage?.length > 0) {
+    dotsDataCheck = JSON.parse(dotsDataFromStorage)
+  } else {
+    dotsDataCheck = defaultData.dots
+  }
+  
+
+  let dataFromStorage = {}
+  if(secondaryDataFromStorage?.length > 0) {
+    dataFromStorage = JSON.parse(secondaryDataFromStorage)
+  } else {
+    dataFromStorage = defaultData.textInputs
+  }
+
+  const [secondaryData, setSecondaryData] = useState(dataFromStorage)
+  const [responsiveData, setResponsiveData] = useState(responsiveDataCheck)
+  const [dotsData, setDotsData] = useState(dotsDataCheck)
+  
+
+  useEffect(() => {
+    localStorage.setItem('secondaryData', JSON.stringify(secondaryData))
+    }, [secondaryData])
+
+  useEffect(() => {
+    localStorage.setItem('responsiveData', JSON.stringify(responsiveData))
+  }, [responsiveData])
+
+  useEffect(() => {
+    // console.log('dotsData: ', dotsData)
+    localStorage.setItem('dotsData', JSON.stringify(dotsData))
+  }, [dotsData])
+  
 
   function lorCall(e) {
-    secondData = lorUpdater(e, secondData)
-    localStorage.setItem('secondData', JSON.stringify(secondData));
-  }
+    const newResponsiveData = lorObjectUpdater(e, responsiveData)
+    // console.log('newResponsiveData: ', newResponsiveData )
+    setResponsiveData(() => {return {...newResponsiveData}})
+    }
+
+  // function lorCall2(e) {
+  //   const newSecondaryData = lorObjectUpdater(e, secondaryData)
+  //   // console.log('newSecondaryData: ', newSecondaryData )
+  //   setSecondaryData(() => {return {...newSecondaryData}})
+  // }
 
   function textAreaUpdate(e) {
     const updateElem = e.target.id
     const updatVal = e.target.value
-    secondData = { ...secondData, [updateElem]: updatVal }
-    console.log(secondData)
-    localStorage.setItem('secondData', JSON.stringify(secondData));
+    // console.log(updateElem, updatVal)
+    // console.log("secondaryData:", secondaryData)
+    // secondData = { ...secondData, [updateElem]: updatVal }
+    setSecondaryData((prevData) => {
+      return { ...prevData, [updateElem]: updatVal }
+    })
+    // console.log(JSON.stringify(secondData))
+    // console.log(secondData)
+    // localStorage.setItem('secondData', JSON.stringify(secondData));
   }
 
   function dotsUpdater(e) {
     const updateElem = e.target.name
     const updatVal = e.target.checked
-    const group = e.target.dataset.group + "-"
-    secondData = { ...secondData, [group+updateElem]: updatVal }
-    console.log(secondData)
-    localStorage.setItem('secondData', JSON.stringify(secondData));
+    const group = e.target.dataset.group
+    // console.log('updateElem: ', updateElem)
+    // console.log('updatVal: ', updatVal)
+    // console.log('group: ', group)
+    
+    const partsIndex = dotsData.findIndex((dotObject) => {
+      return dotObject.bodypart === group
+    })
+    const newdotObject = { ...dotsData[partsIndex] }
+    const newChecks = newdotObject.checks.map((check) => {
+      if(check.id === updateElem) {
+        check.checked = updatVal
+      }
+      return check
+    }) 
+    newdotObject.checks = newChecks
+    const newDots = [...dotsData]
+    newDots[partsIndex] = newdotObject
+    // console.log('newChecks: ', newChecks)
+    // console.log('newdotObject: ', newdotObject)
+    // console.log('newDots: ', newDots)
+    setDotsData(() => {
+      return [ ...newDots ]
+    })
   }
 
   return (
@@ -34,7 +172,7 @@ function Secondary() {
       <section>
         <h2>Secondary Assesment</h2>
         <div className="section-container">
-          <LevelOfResponsiveness updater={lorCall} id="secondary" />
+          <LevelOfResponsiveness options={responsiveData} updater={lorCall} id="secondary" />
           <div className="longtextinput-container">
             <div className="text-area-container">
               <LongTextInput updater={textAreaUpdate} item="complaint" title="Complaint" />
@@ -63,30 +201,31 @@ function Secondary() {
           </div>
           <div className="physicalexamination-container">
             <h3>Hands on physical examination</h3>
-            <div className="body-part">
+            <Dots allOptions={dotsData} updater={dotsUpdater} />
+            {/* <div className="body-part">
               <p>Head</p>
-              <Dots updater={dotsUpdater}id="head"/>
+              <Dots options={dotsData[0]} updater={dotsUpdater} id="head"/>
             </div>
             <div className="body-part">
               <p>Chest</p>
-              <Dots updater={dotsUpdater}id="chest"/>
+              <Dots options={dotsData[1]} updater={dotsUpdater} id="chest"/>
             </div>
             <div className="body-part">
               <p>Abdommen</p>
-              <Dots updater={dotsUpdater}id="abdomen"/>
+              <Dots options={dotsData[2]} updater={dotsUpdater} id="abdomen"/>
             </div>
             <div className="body-part">
               <p>Pelvis</p>
-              <Dots updater={dotsUpdater}id="pelvis" />
+              <Dots options={dotsData[3]} updater={dotsUpdater} id="pelvis" />
             </div>
             <div className="body-part">
               <p>Legs / Arms</p>
-              <Dots updater={dotsUpdater}id="legs" />
+              <Dots options={dotsData[4]} updater={dotsUpdater} id="legs" />
             </div>
             <div className="body-part">
               <p>Back</p>
-              <Dots updater={dotsUpdater}id="back" />
-            </div>
+              <Dots options={dotsData[5]} updater={dotsUpdater} id="back" />
+            </div> */}
           </div>
         </div>
       </section>

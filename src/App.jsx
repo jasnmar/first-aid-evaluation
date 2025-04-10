@@ -9,11 +9,12 @@ function App() {
 
   return (
     <>
-      <h1>Situation Documentation</h1>
+    <main>
       <BasicInfo />
       <Primary />
       <Secondary />
       <Vitals />
+    </main>
     </>
   )
 }

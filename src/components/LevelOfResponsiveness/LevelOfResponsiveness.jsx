@@ -1,4 +1,5 @@
 import RadioChoice from "../RadioChoice/RadioChoice"
+import { v4 as uuidv4 } from 'uuid';
 
 
 function LevelOfResponsiveness(props) {
@@ -6,16 +7,30 @@ function LevelOfResponsiveness(props) {
   const id = props.id
   const updater = props.updater
   
-  
+  // console.log("options", props.options)
   const responsivenessChoices = 
-    {choice:"Responsivness", 
-      options:[
-        {id: "alert", value: "Alert", checked: false}, 
-        {id: "verbal", value: "Verbal", checked: false}, 
-        {id: "pain", value: "Pain Only", checked: false}, 
-        {id: "none", value: "Unresponsive", checked: false}
-      ]
+    {choice:"Responsivness",
+      options:[...props.options.options]
     }
+  // console.log("responsivenessChoices: ", responsivenessChoices)
+  const knowIsShownIndex = props.options.options.findIndex(option => option.id === "alert" )
+  const knowIsShown = props.options.options[knowIsShownIndex].checked
+  // console.log("knowIsShown: ", knowIsShown)
+  const checkBoxes = props.options.checks.map(check => {
+    return (
+      <label key={uuidv4()} className="label-check">
+        <input 
+          data-item={check.id} 
+          data-group={id} 
+          onChange={updater} 
+          type="checkbox" 
+          name={check.id}
+          checked={check.checked}>
+        </input>
+        {check.value}
+      </label>
+    )
+  })
 
   return (
     <>
@@ -26,9 +41,10 @@ function LevelOfResponsiveness(props) {
         options={responsivenessChoices}
         updater={updater} 
       />
-      <div id={id+'-check'} className="check-container hidden">
+      <div id={id+'-check'} className={"check-container " + (knowIsShown ? "" : "hidden")}>
         <p className="check-label" >Do they know</p>
-        <label className="label-check">
+        {checkBoxes}
+        {/* <label className="label-check">
           <input 
             data-item="name" 
             data-group={id} 
@@ -67,7 +83,7 @@ function LevelOfResponsiveness(props) {
             name="happening">
           </input>
           What Happened
-        </label>
+        </label> */}
       </div>
     </>
   )

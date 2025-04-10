@@ -1,87 +1,136 @@
 import "./Vital.css"
+import { useState, useEffect } from "react"
 import TimeInput from "../TimeInput/TimeInput"
 import LevelOfResponsiveness from "../LevelOfResponsiveness/LevelOfResponsiveness"
 import ShortInput from "../ShortInput/ShortInput"
-import { lorUpdater } from "../componentUtils/updater"
+import { lorObjectUpdater } from "../componentUtils/updater"
+import { responsiveData as responsiveDataTemplate } from "../componentUtils/responsiveness"
 
 function Vital(props) {
-  const id = props.id
-  let vitalData = {}
+  //Each time Vital is called it is required to have and id as part of props
+  const vitalId = props.id
+
+  let responsiveDataCheck = {}
+  const responsiveDataFromStorage = localStorage.getItem(vitalId+"responsiveData")
+  if(responsiveDataFromStorage?.length > 0) {
+    responsiveDataCheck = JSON.parse(responsiveDataFromStorage)
+  } else {
+    responsiveDataCheck = responsiveDataTemplate
+  }
+
+  const vitalDataTemplate = {
+    time: "",
+    breath: "",
+    heart: "",
+    skin: "",
+    eyes: "",
+    circulation: "",
+    sensation: "",
+    motion: ""
+  }
+  
+  let vitalDataCheck = {}
+  const vitalDataFromStorage = localStorage.getItem(vitalId+"vitalData")
+  if(vitalDataFromStorage?.length > 0) {
+    vitalDataCheck = JSON.parse(vitalDataFromStorage)
+  } else {
+    vitalDataCheck = vitalDataTemplate
+  }
+
+  const [responsiveData, setResponsiveData] = useState(responsiveDataCheck)
+  const [vitalData, setVitalData] = useState(vitalDataCheck)
+  
+  useEffect(() => {
+    localStorage.setItem(vitalId+"responsiveData", JSON.stringify(responsiveData))
+  }, [responsiveData, vitalId])
+
+  useEffect(() => {
+    localStorage.setItem(vitalId+"vitalData", JSON.stringify(vitalData))
+  }, [vitalData, vitalId])
 
   function lorCall(e) {
-    vitalData = lorUpdater(e, vitalData)
-  }
+    const newResponsiveData = lorObjectUpdater(e, responsiveData)
+    // console.log('newResponsiveData: ', newResponsiveData )
+    setResponsiveData(() => {return {...newResponsiveData}})
+    }
 
   function updateItem(e){
-    const updateElem = e.target.id
+    const updateElem = e.target.name
     const updatVal = e.target.value
-    vitalData={...vitalData, [updateElem]: updatVal}
-    console.log({...vitalData, [updateElem]: updatVal})
+    // console.log(updateElem, updatVal)
+    setVitalData((prevData) => {
+      return {...prevData, [updateElem]: updatVal}})
   }
-
-  
 
   return (
     <>
       <div className="section-container">
       <TimeInput 
             type="time" 
-            id={id} 
-            title="Date" 
+            id={vitalId} 
+            title="Time" 
             updater={updateItem} 
-            name="time" />
+            name="time" 
+            value={vitalData.time}/>
       </div>
-      <LevelOfResponsiveness updater={lorCall} id={id} />
+      <LevelOfResponsiveness options={responsiveData} updater={lorCall} id={vitalId} />
       <div className="section-container">
         <ShortInput 
           type="number" 
           name="breath" 
           title="Breath Rate" 
-          id={id+"breath"} 
+          id={vitalId+"breath"} 
           placeholder="12-20"
-          updater={updateItem} />
+          updater={updateItem}
+          value={vitalData.breath} />
         <ShortInput 
           type="number" 
           name="heart" 
           title="Heart Rate" 
-          id={id+"heart"} 
+          id={vitalId+"heart"} 
           placeholder="50-100"
-          updater={updateItem} />
+          updater={updateItem}
+          value={vitalData.heart} />
         <ShortInput 
           type="text" 
           name="skin" 
           title="Skin (color, temp, moisture)" 
-          id={id+"skin"} 
+          id={vitalId+"skin"} 
           placeholder="normal, warm, dry"
-          updater={updateItem} />
+          updater={updateItem}
+          value={vitalData.skin} />
         <ShortInput 
           type="text" 
           name="eyes" 
           title="Pupils (size, reactive)" 
-          id={id+"eyes"} 
+          id={vitalId+"eyes"} 
           placeholder="equal and reactive"
-          updater={updateItem} />
+          updater={updateItem}
+          value= {vitalData.eyes} />
         <ShortInput 
           type="text" 
           name="circulation" 
           title="Circulation (wrists, feet, capillary refill)" 
-          id={id+"circulation"} 
+          id={vitalId+"circulation"} 
           placeholder="Strong pulse, good refill"
-          updater={updateItem} />
+          updater={updateItem}
+          value={vitalData.circulation} />
         <ShortInput 
           type="text" 
           name="sensation" 
           title="Sensation (feeling in different parts of the body)" 
-          id={id+"sensation"} 
+          id={vitalId+"sensation"} 
           placeholder="reacts to touch on both legs and arms"
-          updater={updateItem} />
+          updater={updateItem}
+          value={vitalData.sensation} />
         <ShortInput 
           type="text" 
           name="motion" 
           title="Movement" 
-          id={id+"motion"} 
+          id={vitalId+"motion"} 
           placeholder="Is able to move freely"
-          updater={updateItem} />
+          updater={updateItem}
+          value={vitalData.motion} />
       </div>
       
     </>

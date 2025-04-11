@@ -64,75 +64,87 @@ function Vital(props) {
 
   return (
     <>
+    <h3>Vital</h3>
+      <div className="section-container vital-container">
+        <TimeInput
+          type="time"
+          id={vitalId}
+          title="Time"
+          updater={updateItem}
+          name="time"
+          value={vitalData.time}
+        />
+      <LevelOfResponsiveness
+        options={responsiveData}
+        updater={lorCall}
+        id={vitalId}
+      />
       <div className="section-container">
-      <TimeInput 
-            type="time" 
-            id={vitalId} 
-            title="Time" 
-            updater={updateItem} 
-            name="time" 
-            value={vitalData.time}/>
-      </div>
-      <LevelOfResponsiveness options={responsiveData} updater={lorCall} id={vitalId} />
-      <div className="section-container">
-        <ShortInput 
-          type="number" 
-          name="breath" 
-          title="Breath Rate" 
-          id={vitalId+"breath"} 
+        <ShortInput
+          type="number"
+          name="breath"
+          title="Breath Rate"
+          id={vitalId + "breath"}
           placeholder="12-20"
           updater={updateItem}
-          value={vitalData.breath} />
-        <ShortInput 
-          type="number" 
-          name="heart" 
-          title="Heart Rate" 
-          id={vitalId+"heart"} 
+          value={vitalData.breath}
+        />
+        <ShortInput
+          type="number"
+          name="heart"
+          title="Heart Rate"
+          id={vitalId + "heart"}
           placeholder="50-100"
           updater={updateItem}
-          value={vitalData.heart} />
-        <ShortInput 
-          type="text" 
-          name="skin" 
-          title="Skin (color, temp, moisture)" 
-          id={vitalId+"skin"} 
+          value={vitalData.heart}
+        />
+        <ShortInput
+          type="text"
+          name="skin"
+          title="Skin (color, temp, moisture)"
+          id={vitalId + "skin"}
           placeholder="normal, warm, dry"
           updater={updateItem}
-          value={vitalData.skin} />
-        <ShortInput 
-          type="text" 
-          name="eyes" 
-          title="Pupils (size, reactive)" 
-          id={vitalId+"eyes"} 
+          value={vitalData.skin}
+        />
+        <ShortInput
+          type="text"
+          name="eyes"
+          title="Pupils (size, reactive)"
+          id={vitalId + "eyes"}
           placeholder="equal and reactive"
           updater={updateItem}
-          value= {vitalData.eyes} />
-        <ShortInput 
-          type="text" 
-          name="circulation" 
-          title="Circulation (wrists, feet, capillary refill)" 
-          id={vitalId+"circulation"} 
+          value={vitalData.eyes}
+        />
+        <ShortInput
+          type="text"
+          name="circulation"
+          title="Circulation (wrists, feet, capillary refill)"
+          id={vitalId + "circulation"}
           placeholder="Strong pulse, good refill"
           updater={updateItem}
-          value={vitalData.circulation} />
-        <ShortInput 
-          type="text" 
-          name="sensation" 
-          title="Sensation (feeling in different parts of the body)" 
-          id={vitalId+"sensation"} 
+          value={vitalData.circulation}
+        />
+        <ShortInput
+          type="text"
+          name="sensation"
+          title="Sensation (feeling in different parts of the body)"
+          id={vitalId + "sensation"}
           placeholder="reacts to touch on both legs and arms"
           updater={updateItem}
-          value={vitalData.sensation} />
-        <ShortInput 
-          type="text" 
-          name="motion" 
-          title="Movement" 
-          id={vitalId+"motion"} 
+          value={vitalData.sensation}
+        />
+        <ShortInput
+          type="text"
+          name="motion"
+          title="Movement"
+          id={vitalId + "motion"}
           placeholder="Is able to move freely"
           updater={updateItem}
-          value={vitalData.motion} />
+          value={vitalData.motion}
+        />
+        </div>
       </div>
-      
     </>
   )
 }

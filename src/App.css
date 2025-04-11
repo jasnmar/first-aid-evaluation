@@ -2,36 +2,42 @@
   --input-background-color: azure;
   --input-width: 80%;
   --border-radius: 4px;
+  --control-color: red;
 }
 
 body {
   margin-bottom: 4rem;
-  width: 100%;
-}
-
-#root {
-  width: 100vw;
+  background-image: linear-gradient(to right, aliceblue, linen);
 }
 
 main {
   display: flex;
   flex-direction: column;
+  width:100vw;
 }
 
-h1, h2 {
+h1, h2, h3 {
   margin-left: 1rem;
 }
+
+input[type] {
+  accent-color: var(--control-color);
+}
+
 p {
   margin: 0;
 }
+
 section {
-  width: 100vw;
+  border-bottom: 3px solid grey;
 }
 
 .section-container {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  width: 100vw;
+  
 }
 
 .input-container {
@@ -118,12 +124,9 @@ fieldset {
 @media (min-width: 1001px) {
   main{
     width: 100%;
-    flex-direction: column;
-    align-items: center;
+    flex-direction: flex-start;
   }
-  section {
-    width: 100vw;
-  }
+
   .section-container {
     flex-direction: row;
     flex-wrap: wrap;

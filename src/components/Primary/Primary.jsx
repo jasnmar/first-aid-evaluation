@@ -117,7 +117,7 @@ function Primary() {
             options={primaryData[4]}
             updater={updateItem} 
           />
-        </div>"
+        </div>
       </section>
     </>
   )

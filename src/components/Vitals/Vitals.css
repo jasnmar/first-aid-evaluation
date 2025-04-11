@@ -1,0 +1,21 @@
+
+
+.vital--title {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1rem;
+}
+
+.vital--title > button {
+  height: 2rem;
+  width: 2rem;
+  background: var(--control-color);
+  border: none;
+  border-radius: var(--border-radius);
+  color: white;
+  font-weight: bold;
+  font-size: 1.5rem;
+  cursor: pointer;
+}

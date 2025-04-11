@@ -1,0 +1,17 @@
+
+
+.lor-container {
+
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 1001px) {
+  /* CSS rules to apply when the screen width is 401 pixels or wider */
+  /* Example: */
+  .lor-container {
+    flex-direction: row;
+  }
+
+}

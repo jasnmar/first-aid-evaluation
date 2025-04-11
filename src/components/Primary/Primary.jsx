@@ -85,37 +85,39 @@ function Primary() {
     <>
       <section> 
         <h2>Primary Assesment</h2>
-        <RadioChoice 
-          legend="Airway" 
-          name="airway" 
-          options={primaryData[0]}
-          updater={updateItem} 
-          // selected={airway} 
-        />
-        <RadioChoice 
-          legend="Breathing" 
-          name="breathing" 
-          options={primaryData[1]}
-          updater={updateItem} 
-        />
-        <RadioChoice 
-          legend="Circulation (Bleeding)" 
-          name="circulation" 
-          options={primaryData[2]}
-          updater={updateItem} 
-        />
-        <RadioChoice 
-          legend="Disability (Spine)" 
-          name="disability" 
-          options={primaryData[3]}
-          updater={updateItem} 
-        />
-        <RadioChoice 
-          legend="Environmental" 
-          name="environmental" 
-          options={primaryData[4]}
-          updater={updateItem} 
-        />
+        <div className="section-container">
+          <RadioChoice 
+            legend="Airway" 
+            name="airway" 
+            options={primaryData[0]}
+            updater={updateItem} 
+            // selected={airway} 
+          />
+          <RadioChoice 
+            legend="Breathing" 
+            name="breathing" 
+            options={primaryData[1]}
+            updater={updateItem} 
+          />
+          <RadioChoice 
+            legend="Circulation (Bleeding)" 
+            name="circulation" 
+            options={primaryData[2]}
+            updater={updateItem} 
+          />
+          <RadioChoice 
+            legend="Disability (Spine)" 
+            name="disability" 
+            options={primaryData[3]}
+            updater={updateItem} 
+          />
+          <RadioChoice 
+            legend="Environmental" 
+            name="environmental" 
+            options={primaryData[4]}
+            updater={updateItem} 
+          />
+        </div>
       </section>
     </>
   )

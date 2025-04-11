@@ -172,7 +172,9 @@ function Secondary() {
       <section>
         <h2>Secondary Assesment</h2>
         <div className="section-container">
+          
           <LevelOfResponsiveness options={responsiveData} updater={lorCall} id="secondary" />
+          
           <div className="longtextinput-container">
             <div className="text-area-container">
               <LongTextInput updater={textAreaUpdate} item="complaint" title="Complaint" />
@@ -202,30 +204,6 @@ function Secondary() {
           <div className="physicalexamination-container">
             <h3>Hands on physical examination</h3>
             <Dots allOptions={dotsData} updater={dotsUpdater} />
-            {/* <div className="body-part">
-              <p>Head</p>
-              <Dots options={dotsData[0]} updater={dotsUpdater} id="head"/>
-            </div>
-            <div className="body-part">
-              <p>Chest</p>
-              <Dots options={dotsData[1]} updater={dotsUpdater} id="chest"/>
-            </div>
-            <div className="body-part">
-              <p>Abdommen</p>
-              <Dots options={dotsData[2]} updater={dotsUpdater} id="abdomen"/>
-            </div>
-            <div className="body-part">
-              <p>Pelvis</p>
-              <Dots options={dotsData[3]} updater={dotsUpdater} id="pelvis" />
-            </div>
-            <div className="body-part">
-              <p>Legs / Arms</p>
-              <Dots options={dotsData[4]} updater={dotsUpdater} id="legs" />
-            </div>
-            <div className="body-part">
-              <p>Back</p>
-              <Dots options={dotsData[5]} updater={dotsUpdater} id="back" />
-            </div> */}
           </div>
         </div>
       </section>
